@@ -17,7 +17,7 @@ public class Main {
                 }
             }
         } else {
-            if (s1.length() < s2.length()) { //make sure 1 is always longer
+            if (s1.length() < s2.length()) { //make sure 1 is always longer!
                 String s3 = s2;
                 s2 = s1;
                 s1 = s3;
