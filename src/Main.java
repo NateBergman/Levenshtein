@@ -2,7 +2,7 @@
 // need to record paths I've already taken
 public class Main {
     public static void main(String[] args) {
-
+        //make it so that the program calculates when the lengths change at the start
     }
     public static boolean isAdjacent (String s1, String s2) {
         if (s1.length() == s2.length()) {
