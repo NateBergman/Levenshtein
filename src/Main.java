@@ -30,20 +30,30 @@ public class Main {
         System.out.print("Ending word : ");
         String end = console.next();
         ArrayList<String> pastMoves = new ArrayList<String>();
+        pastMoves.add(current);
 
         while(!current.equals(end)) {
-            ArrayList<String> moves = new ArrayList<String>();
-            for (int i = (int) lengths.get(current.length() - 1); i < (int) lengths.get(current.length() + 2); i++) {
-                if (isAdjacent(current, words.get(i)) && !pastMoves.contains(words.get(i))) {
-                    moves.add(words.get(i));
+            Map moves = new HashMap<String,Integer>();
+            String best = "";
+            int score = -999;
+            int backtrack = 1;
+            while (moves.isEmpty()) {
+                current = pastMoves.get(pastMoves.size() - backtrack);
+                for (int i = (int) lengths.get(current.length() - 1); i < (int) lengths.get(current.length() + 2); i++) {
+                    if (isAdjacent(current, words.get(i)) && !pastMoves.contains(words.get(i))) {
+                        moves.put(words.get(i), scoreGuess(words.get(i), end));
+                        if ((int) moves.get(words.get(i)) > score) {
+                            best = words.get(i);
+                            score = (int) moves.get(words.get(i));
+                        }
+                    }
                 }
+                current = best;
+                backtrack++;
             }
-            Random r = new Random();
-            current = moves.get(r.nextInt(moves.size())); //need to make it backtrack and actualy go towards the goal
 
-            System.out.print(current);
+            System.out.println(current);
             pastMoves.add(current);
-            console.next();
         }
     }
     public static int scoreGuess (String guess, String end) {
