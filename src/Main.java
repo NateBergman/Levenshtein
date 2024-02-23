@@ -32,7 +32,7 @@ public class Main {
         ArrayList<String> pastMoves = new ArrayList<String>();
         pastMoves.add(current);
 
-        ArrayList<String> path = new ArrayList<String>();
+        ArrayList<String> path = new ArrayList<String>(); //stores the path to display
         path.add(current);
 
         while(!current.equals(end)) {
@@ -41,8 +41,9 @@ public class Main {
             int score = -999;
             int backtrack = 1;
             while (moves.isEmpty()) {
-                if (backtrack > pastMoves.size()) {
-                    System.out.println("No path avaliable");
+                if (backtrack > pastMoves.size()) { //if backtracking past starting word
+                    System.out.println("No path avaliable!");
+                    current = end;
                     break;
                 }
                 current = pastMoves.get(pastMoves.size() - backtrack);
@@ -62,10 +63,6 @@ public class Main {
                 backtrack++;
             }
 
-            if (path.isEmpty()) {
-                break;
-            }
-            System.out.println(current);
             pastMoves.add(current);
             path.add(current);
         }
