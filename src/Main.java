@@ -32,13 +32,23 @@ public class Main {
         ArrayList<String> pastMoves = new ArrayList<String>();
         pastMoves.add(current);
 
+        ArrayList<String> path = new ArrayList<String>();
+        path.add(current);
+
         while(!current.equals(end)) {
             Map moves = new HashMap<String,Integer>();
             String best = "";
             int score = -999;
             int backtrack = 1;
             while (moves.isEmpty()) {
+                if (backtrack > pastMoves.size()) {
+                    System.out.println("No path avaliable");
+                    break;
+                }
                 current = pastMoves.get(pastMoves.size() - backtrack);
+                if (backtrack > 1) {
+                    path.remove(path.size() - 1);
+                }
                 for (int i = (int) lengths.get(current.length() - 1); i < (int) lengths.get(current.length() + 2); i++) {
                     if (isAdjacent(current, words.get(i)) && !pastMoves.contains(words.get(i))) {
                         moves.put(words.get(i), scoreGuess(words.get(i), end));
@@ -52,9 +62,14 @@ public class Main {
                 backtrack++;
             }
 
+            if (path.isEmpty()) {
+                break;
+            }
             System.out.println(current);
             pastMoves.add(current);
+            path.add(current);
         }
+        System.out.println(path);
     }
     public static int scoreGuess (String guess, String end) {
         int score = -1 * Math.abs(guess.length() - end.length());
