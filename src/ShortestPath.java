@@ -2,12 +2,12 @@ import java.io.*;
 import java.util.*;
 public class ShortestPath {
     static int currentBestSize = Integer.MAX_VALUE;
-    static List<String[]> finalPaths = new ArrayList<>();
+    static List<List<String>> finalPaths = new ArrayList<>();
     static ArrayList<String> words = new ArrayList<String>();
-    static Map lengths = new HashMap<Integer,Integer>();
+    static Map lengths = new HashMap<Integer,Integer>(); //gives you the index that each length starts at in the dictionary
     static String end;
     public static void main (String[] args) throws FileNotFoundException {
-        Scanner dictionary = new Scanner(new File("src/DictionarySortedByLength"));
+        Scanner dictionary = new Scanner(new File("src/DictionarySortedByLength")); //same as non-shortest
         while (dictionary.hasNext()) {
             words.add(dictionary.next().toLowerCase());
         }
@@ -28,15 +28,43 @@ public class ShortestPath {
 
         Scanner console = new Scanner(System.in);
         System.out.print("Starting word : ");
-        String current = console.next();
+        ArrayList<String> current = new ArrayList<String>();
+        current.add(console.next());
         System.out.print("Ending word : ");
         end = console.next();
+
+        evaluateNodes(current);
+        System.out.println(currentBestSize);
+        System.out.println(finalPaths);
     }
-    public static void evaluateNodes (String[] path) {
-        //if end, add path and set pb
-        //terminate if depth >= pb
-        //otherwise, get moves, rank them, and recursively call this in order with those added to the path
-        //perhaps make a comparator to sort them and rank by this.
+    public static void evaluateNodes (List<String> path) {
+        String current = path.get(path.size() - 1);
+        if (end.equals(current)) {
+            if (path.size() < currentBestSize) {
+                finalPaths.clear();
+                currentBestSize = path.size();
+            }
+            finalPaths.add(path);
+            return;
+        } else if (path.size() < currentBestSize && path.size() < 15) {
+            //ArrayList<String> moves = new ArrayList<String>();
+            for (int i = (int) lengths.get(current.length() - 1); i < (int) lengths.get(current.length() + 2); i++) {
+                if (isAdjacent(words.get(i),current) && !path.contains(words.get(i))) {
+                    //moves.add(words.get(i));
+                    ArrayList<String> newPath = new ArrayList<String>();
+                    newPath.addAll(path);
+                    newPath.add(words.get(i));
+                    evaluateNodes(newPath);
+                }
+            }
+            /*Collections.sort(moves,new GuessComparator(end));
+            for (int i = 0; i < moves.size(); i++) {
+                ArrayList<String> newPath = new ArrayList<String>();
+                newPath.addAll(path);
+                newPath.add(moves.get(i));
+                evaluateNodes(newPath);
+            }*/
+        }
     }
     public static boolean isAdjacent (String s1, String s2) { //CAN ONLY CALL ON WORDS SAME SIZE OR 1 SIZE DIFFERENT
         if (s1.length() == s2.length()) {//if the words are same length it's simple, just comapre each and if there's >1 mismatch they don't work
