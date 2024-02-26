@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 public class ShortestPath {
-    static int currentBestSize = Integer.MAX_VALUE;
+    static int currentBestSize;
     static List<List<String>> finalPaths = new ArrayList<>();
     static ArrayList<String> words = new ArrayList<String>();
     static Map lengths = new HashMap<Integer,Integer>(); //gives you the index that each length starts at in the dictionary
@@ -33,37 +33,28 @@ public class ShortestPath {
         System.out.print("Ending word : ");
         end = console.next();
 
-        evaluateNodes(current);
-        System.out.println(currentBestSize);
+        for (currentBestSize = 2; currentBestSize < 16 && finalPaths.isEmpty(); currentBestSize++) {
+            evaluateNodes(current);
+        }
+        currentBestSize -= 2;
+        System.out.println("Shortest path length: " + currentBestSize);
         System.out.println(finalPaths);
+        System.out.println("Number of Paths: " + finalPaths.size());
     }
     public static void evaluateNodes (List<String> path) {
         String current = path.get(path.size() - 1);
         if (end.equals(current)) {
-            if (path.size() < currentBestSize) {
-                finalPaths.clear();
-                currentBestSize = path.size();
-            }
             finalPaths.add(path);
             return;
-        } else if (path.size() < currentBestSize && path.size() < 15) {
-            //ArrayList<String> moves = new ArrayList<String>();
+        } else if (path.size() < currentBestSize) {
             for (int i = (int) lengths.get(current.length() - 1); i < (int) lengths.get(current.length() + 2); i++) {
                 if (isAdjacent(words.get(i),current) && !path.contains(words.get(i))) {
-                    //moves.add(words.get(i));
                     ArrayList<String> newPath = new ArrayList<String>();
                     newPath.addAll(path);
                     newPath.add(words.get(i));
                     evaluateNodes(newPath);
                 }
             }
-            /*Collections.sort(moves,new GuessComparator(end));
-            for (int i = 0; i < moves.size(); i++) {
-                ArrayList<String> newPath = new ArrayList<String>();
-                newPath.addAll(path);
-                newPath.add(moves.get(i));
-                evaluateNodes(newPath);
-            }*/
         }
     }
     public static boolean isAdjacent (String s1, String s2) { //CAN ONLY CALL ON WORDS SAME SIZE OR 1 SIZE DIFFERENT
