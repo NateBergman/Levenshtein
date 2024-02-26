@@ -12,7 +12,7 @@ public class ShortestPath {
             words.add(dictionary.next().toLowerCase());
         }
 
-        int longest = words.get(words.size() - 1).length(); //build map of what index each length is
+        int longest = words.get(words.size() - 1).length(); //build map of what index each length is yay
         lengths.put(words.get(0).length(),0);
         for (int i = 1; i < words.size(); i++) {
             if (words.get(i).length() > words.get(i - 1).length()) {
