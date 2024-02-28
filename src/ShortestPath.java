@@ -9,7 +9,7 @@ public class ShortestPath {
             words.add(dictionary.next().toLowerCase());
         }
 
-        int longest = words.get(words.size() - 1).length(); //build map of what index each length is yay
+        int longest = words.get(words.size() - 1).length(); //build map of what index each length is at
         lengths.put(words.get(0).length(),0);
         for (int i = 1; i < words.size(); i++) {
             if (words.get(i).length() > words.get(i - 1).length()) {
@@ -23,49 +23,51 @@ public class ShortestPath {
             }
         }
 
-        ArrayList<ArrayList<String>> paths = new ArrayList<>();
-        ArrayList<ArrayList<String>> finalPaths = new ArrayList<>();
+        Set<String> previous = new HashSet<>();
+        List<List<String>> paths = new ArrayList<>();
         paths.add(new ArrayList<>());
+        List<List<String>> finalPaths = new ArrayList<>();
+
         Scanner console = new Scanner(System.in);
         System.out.print("Starting word : ");
         paths.get(0).add(console.next());
         System.out.print("Ending word : ");
         String end = console.next();
 
-        int size = 0;
-        boolean finished = false;
-        while  (!finished && size < 20) {
-            for (ArrayList<String> s : paths) {
-                if (s.get(size).equals(end)) {
-                    finished = true;
-                    finalPaths.add(s);
+        int depth = 0;
+        boolean found = false;
+        while (depth < 20 && !found) {
+            List<List<String>> newPaths = new ArrayList<>();
+            Set<String> newPrevious = new HashSet<>();
+            for (int i = 0; i < paths.size(); i++) {
+                List<String> currentPath = paths.get(i);
+                String word = currentPath.get(currentPath.size() - 1);
+
+                List<String> neighbors = getAdjacents(word,previous);
+                for (String s : neighbors) {
+                    newPrevious.add(s);
+                    List<String> l = new ArrayList<String>(currentPath);
+                    l.add(s);
+                    newPaths.add(l);
                 }
             }
-            size++;
-            paths = SearchNextDepth(paths);
+            paths = newPaths;
+            previous.addAll(newPrevious);
+            depth++;
         }
-        System.out.println("Distance : " + size);
+
+        System.out.println("Distance : " + depth);
         System.out.println("Paths : " + finalPaths);
     }
-    public static ArrayList<ArrayList<String>> SearchNextDepth (ArrayList<ArrayList<String>> paths) {
-        ArrayList<ArrayList<String>> newPaths = new ArrayList<ArrayList<String>>();
-        for (ArrayList<String> s : paths) {
-            newPaths.addAll(wordSearch(s));
-        }
-        return newPaths;
-    }
-    public static ArrayList<ArrayList<String>> wordSearch (ArrayList<String> path) {
-        ArrayList<ArrayList<String>> legalMoves = new ArrayList<ArrayList<String>>();
-        String word = path.get(path.size() - 1);
+    public static List<String> getAdjacents (String word, Set previous) {
+        List<String> moves = new ArrayList<>();
         for (int i = (int) lengths.get(word.length() - 1); i < (int) lengths.get(word.length() + 2); i++) {
-            if (isAdjacent(words.get(i),word) && !path.contains(words.get(i))) {
-                ArrayList<String> newPath = new ArrayList<String>();
-                newPath.addAll(path);
-                newPath.add(words.get(i));
-                legalMoves.add(newPath);
+            String newWord = words.get(i);
+            if (isAdjacent(newWord,word) && !previous.contains(newWord)) {
+                moves.add(words.get(i));
             }
         }
-        return legalMoves;
+        return moves;
     }
     public static boolean isAdjacent (String s1, String s2) { //CAN ONLY CALL ON WORDS SAME SIZE OR 1 SIZE DIFFERENT
         if (s1.length() == s2.length()) {//if the words are same length it's simple, just comapre each and if there's >1 mismatch they don't work
