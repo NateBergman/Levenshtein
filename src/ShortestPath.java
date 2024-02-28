@@ -49,6 +49,10 @@ public class ShortestPath {
                     List<String> l = new ArrayList<String>(currentPath);
                     l.add(s);
                     newPaths.add(l);
+                    if (s.equals(end)) {
+                        found = true;
+                        finalPaths.add(l);
+                    }
                 }
             }
             paths = newPaths;
