@@ -4,7 +4,7 @@ public class ShortestPath {
     public static void main (String[] args) throws FileNotFoundException {
         Map moveMap = new TreeMap<String,List<String>>();
         Scanner lineScanner = new Scanner(new File("src/Moves"));
-        while (lineScanner.hasNext()) {
+        while (lineScanner.hasNext()) { //builds move map
             Scanner wordScanner = new Scanner(lineScanner.nextLine());
             String key = wordScanner.next();
             List<String> adjacents = new ArrayList<String>();
@@ -17,43 +17,26 @@ public class ShortestPath {
         }
 
         Set<String> previous = new HashSet<>();
-        List<List<String>> paths = new ArrayList<>();
-        paths.add(new ArrayList<>());
         List<List<String>> finalPaths = new ArrayList<>();
+        Queue<WordNode> queue = new LinkedList<>();
 
         Scanner console = new Scanner(System.in);
         System.out.print("Starting word : ");
-        paths.get(0).add(console.next());
+        queue.add(new WordNode(console.next(),0,new LinkedList<String>()));
         System.out.print("Ending word : ");
         String end = console.next();
 
-        int depth = 0;
         boolean found = false;
-        while (depth < 20 && !found) {
-            List<List<String>> newPaths = new ArrayList<>();
-            Set<String> newPrevious = new HashSet<>();
-            for (int i = 0; i < paths.size(); i++) {
-                List<String> currentPath = paths.get(i);
-                String word = currentPath.get(currentPath.size() - 1);
-
-                List<String> neighbors = (List<String>) moveMap.get(word);
-                for (String s : neighbors) {
-                    newPrevious.add(s);
-                    List<String> l = new ArrayList<String>(currentPath);
-                    l.add(s);
-                    newPaths.add(l);
-                    if (s.equals(end)) {
-                        found = true;
-                        finalPaths.add(l);
-                    }
-                }
+        while (!queue.isEmpty()) { //evaluation function
+            WordNode word = queue.element();
+            if (word.getWord().equals(end)) {
+                found = true;
+                finalPaths.add(word.getPath());
+            } else if (!found){
+                //add all legal moves to queue
             }
-            paths = newPaths;
-            previous.addAll(newPrevious);
-            depth++;
+            queue.remove();
         }
-
-        System.out.println("Distance : " + depth);
         System.out.println("Paths : " + finalPaths);
     }
 }
