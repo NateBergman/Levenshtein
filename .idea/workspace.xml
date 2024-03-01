@@ -4,17 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6f02f84-6fe2-439e-b1b9-bbb2ea507b8a" name="Changes" comment="goaded program">
+    <list default="true" id="d6f02f84-6fe2-439e-b1b9-bbb2ea507b8a" name="Changes" comment="Made file with moves (has same word, but that's not important because we have a set with previous in the solver)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MakeMoveFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MakeMoveFile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ShortestPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ShortestPath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WordNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WordNode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="CodeStyleSettingsInfer">
-    <option name="done" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -39,12 +38,6 @@
         <option name="url" value="https://github.com/NateBergman/Levenshtein" />
       </UrlAndAccount>
     </option>
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectCodeStyleSettingsMigration">
-    <option name="version" value="2" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -96,28 +89,23 @@
       <option name="project" value="LOCAL" />
       <updated>1708541720792</updated>
     </task>
-    <task id="LOCAL-00004" summary="works! not shortest path">
-      <created>1708632376689</created>
+    <task id="LOCAL-00004" summary="First version (not shortest path or optimised for efficiency) completed; finds a path and accurately returns it (or if there is no path)">
+      <option name="closed" value="true" />
+      <created>1708711803371</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1708632376689</updated>
+      <updated>1708711803371</updated>
     </task>
-    <task id="LOCAL-00005" summary="working on queues">
-      <created>1709237845884</created>
+    <task id="LOCAL-00005" summary="Made file with moves (has same word, but that's not important because we have a set with previous in the solver)">
+      <option name="closed" value="true" />
+      <created>1709231185423</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1709237845884</updated>
+      <updated>1709231185423</updated>
     </task>
-    <task id="LOCAL-00006" summary="goaded program">
-      <created>1709272446731</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1709272446731</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -134,9 +122,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit!" />
     <MESSAGE value="second" />
-    <MESSAGE value="works! not shortest path" />
-    <MESSAGE value="working on queues" />
-    <MESSAGE value="goaded program" />
-    <option name="LAST_COMMIT_MESSAGE" value="goaded program" />
+    <MESSAGE value="First version (not shortest path or optimised for efficiency) completed; finds a path and accurately returns it (or if there is no path)" />
+    <MESSAGE value="Made file with moves (has same word, but that's not important because we have a set with previous in the solver)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Made file with moves (has same word, but that's not important because we have a set with previous in the solver)" />
   </component>
 </project>

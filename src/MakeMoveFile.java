@@ -25,17 +25,17 @@ public class MakeMoveFile {
 
         PrintStream output = new PrintStream(new File("src/Moves"));
 
-        for (int i = 0; i < words.size(); i++) {
+        for (int i = 0; i < words.size(); i++) { //for each line, prints the word and what words are adjacent in a file
             String word = words.get(i);
             output.println(word + " " + getAdjacents(word,words,lengths));
         }
     }
-    public static List<String> getAdjacents (String word, ArrayList<String> words, Map lengths) {
+    public static List<String> getAdjacents (String word, ArrayList<String> words, Map lengths) { //returns all valid moves
         List<String> moves = new ArrayList<>();
         for (int i = (int) lengths.get(word.length() - 1); i < (int) lengths.get(word.length() + 2); i++) {
-            String newWord = words.get(i);
-            if (!word.equals(newWord) && isAdjacent(newWord,word)) {
-                moves.add(words.get(i));
+            String newWord = words.get(i); //goes through every word same length, 1 shorter, or 1 longer and...
+            if (!word.equals(newWord) && isAdjacent(newWord,word)) { //tests if they are one character away and if so...
+                moves.add(words.get(i)); //adds them to the list of legal moves
             }
         }
         return moves;
