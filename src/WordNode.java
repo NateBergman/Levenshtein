@@ -6,7 +6,8 @@ public class WordNode {
     public WordNode (String word, int depth, List<String> path) {
         this.word = word;
         this.depth = depth;
-        this.path = path;
+        this.path = new LinkedList<>(path);
+        this.path.add(word);
     }
     public String getWord() {
         return word;

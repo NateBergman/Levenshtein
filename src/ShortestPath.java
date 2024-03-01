@@ -27,16 +27,34 @@ public class ShortestPath {
         String end = console.next();
 
         boolean found = false;
-        while (!queue.isEmpty()) { //evaluation function
+        int depth = 0;
+        Set<String> tempPrevious = new HashSet<>();
+        while (!queue.isEmpty() && depth < 20) { //evaluation function
             WordNode word = queue.element();
+            if (word.getDepth() > depth) {
+                depth = word.getDepth();
+                previous.addAll(tempPrevious);
+                tempPrevious.clear();
+            }
             if (word.getWord().equals(end)) {
                 found = true;
                 finalPaths.add(word.getPath());
             } else if (!found){
-                //add all legal moves to queue
+                List<String> moves = (List<String>) moveMap.get(word.getWord());
+                for (String s : moves) {
+                    if (!previous.contains(s)) {
+                        queue.add(new WordNode(s,depth + 1,word.getPath()));
+                        tempPrevious.add(s);
+                    }
+                }
             }
             queue.remove();
         }
-        System.out.println("Paths : " + finalPaths);
+        System.out.println("Depth (inclusive): " + depth);
+        if (finalPaths.isEmpty()) {
+            System.out.println("No paths!");
+        } else {
+            System.out.println("Paths : " + finalPaths);
+        }
     }
 }
