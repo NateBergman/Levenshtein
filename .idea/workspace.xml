@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6f02f84-6fe2-439e-b1b9-bbb2ea507b8a" name="Changes" comment="working on queues">
+    <list default="true" id="d6f02f84-6fe2-439e-b1b9-bbb2ea507b8a" name="Changes" comment="goaded program">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ShortestPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ShortestPath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WordNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WordNode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +110,14 @@
       <option name="project" value="LOCAL" />
       <updated>1709237845884</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="goaded program">
+      <created>1709272446731</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1709272446731</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -130,6 +136,7 @@
     <MESSAGE value="second" />
     <MESSAGE value="works! not shortest path" />
     <MESSAGE value="working on queues" />
-    <option name="LAST_COMMIT_MESSAGE" value="working on queues" />
+    <MESSAGE value="goaded program" />
+    <option name="LAST_COMMIT_MESSAGE" value="goaded program" />
   </component>
 </project>
