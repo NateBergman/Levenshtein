@@ -60,8 +60,8 @@ public class ShortestPath {
             System.out.println("No paths!");
         } else {
             //System.out.println("Paths : " + paths);
-            System.out.println("Paths:");
-            formatPaths(paths);
+            System.out.println("Paths(" + paths.size() + "):");
+            formatPaths(paths); //i like this version
         }
     }
     public static void formatPaths(List<List<String>> input) {
