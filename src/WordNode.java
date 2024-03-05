@@ -1,5 +1,5 @@
 import java.util.*;
-public class WordNode {
+public class WordNode { //really just a compact way of storing everything important for a guess in a queue
     String word;
     int depth;
     List<String> path;

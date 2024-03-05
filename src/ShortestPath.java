@@ -36,7 +36,7 @@ public class ShortestPath {
                 previous.addAll(tempPrevious);
                 tempPrevious.clear(); //need to make it so that it removes everything from the queue
 
-                if (found) { //if we jump up a level after one path has already been completed, reamaining paths won't be the shortest
+                if (found) { //if we jump up a level after one path has already been completed, remaining paths won't be the shortest
                     queue.clear();
                     break;
                 }
