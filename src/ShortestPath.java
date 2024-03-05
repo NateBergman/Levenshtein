@@ -59,7 +59,21 @@ public class ShortestPath {
         if (paths.isEmpty()) {
             System.out.println("No paths!");
         } else {
-            System.out.println("Paths : " + paths);
+            //System.out.println("Paths : " + paths);
+            System.out.println("Paths:");
+            formatPaths(paths);
         }
+    }
+    public static void formatPaths(List<List<String>> input) {
+        System.out.println("digraph something{concentrate=true;");
+        for (List<String> l : input) {
+            System.out.print(l.get(0));
+            for (int i = 1; i < l.size(); i++) {
+                System.out.print(" -> ");
+                System.out.print(l.get(i));
+            }
+            System.out.println();
+        }
+        System.out.println("}");
     }
 }

@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6f02f84-6fe2-439e-b1b9-bbb2ea507b8a" name="Changes" comment="goaded program">
+    <list default="true" id="d6f02f84-6fe2-439e-b1b9-bbb2ea507b8a" name="Changes" comment="fixed error where longer paths already in the queue would still be evaluated after a shortest path was found and cleaned things up">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ShortestPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ShortestPath.java" afterDir="false" />
     </list>
@@ -117,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1709272446731</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fixed error where longer paths already in the queue would still be evaluated after a shortest path was found and cleaned things up">
+      <created>1709308663223</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1709308663223</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -137,6 +144,7 @@
     <MESSAGE value="works! not shortest path" />
     <MESSAGE value="working on queues" />
     <MESSAGE value="goaded program" />
-    <option name="LAST_COMMIT_MESSAGE" value="goaded program" />
+    <MESSAGE value="fixed error where longer paths already in the queue would still be evaluated after a shortest path was found and cleaned things up" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed error where longer paths already in the queue would still be evaluated after a shortest path was found and cleaned things up" />
   </component>
 </project>
