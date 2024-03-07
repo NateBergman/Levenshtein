@@ -1,21 +1,22 @@
 import java.util.*;
 public class WordNode { //really just a compact way of storing everything important for a guess in a queue
     String word;
-    int depth;
-    List<String> path;
-    public WordNode (String word, int depth, List<String> path) {
+    WordNode previous;
+    public WordNode (String word, WordNode previous) {
         this.word = word;
-        this.depth = depth;
-        this.path = new LinkedList<>(path);
-        this.path.add(word);
+        this.previous = previous;
     }
     public String getWord() {
         return word;
     }
-    public int getDepth() {
-        return depth;
-    }
-    public List<String> getPath() {
+    public String getPath() {
+        String path = "";
+        if (previous == null) {
+            path += word;
+        } else {
+            path += previous.getPath();
+            path += " -> " + word;
+        }
         return path;
     }
 }
