@@ -4,7 +4,7 @@ public class NoNodeShortestPath {
     public static void main (String[] args) throws FileNotFoundException {
         Map moveMap = new TreeMap<String,Set<String>>(); //builds map of valid moves for each word from file
         Scanner lineScanner = new Scanner(new File("src/Moves"));
-        while (lineScanner.hasNext()) {
+        while (lineScanner.hasNext()) { //slowest part by far, should probably clean up
             Scanner wordScanner = new Scanner(lineScanner.nextLine());
             String key = wordScanner.next();
             Set<String> adjacents = new HashSet<String>();
@@ -42,13 +42,13 @@ public class NoNodeShortestPath {
             } else if (depth < finalDepth) {
                 Set<String> moves = (Set<String>) moveMap.get(word);
                 for (String s : moves) {
-                    if (!previous.containsKey(s)) {
+                    if (!previous.containsKey(s)) { //unexplored words
                         previous.put(s, new HashSet<>());
                         previous.get(s).add(word);
-                        queue.add(s);
-                        depths.put(s,depth + 1);
+                        queue.add(s); //great thing about this method is only need to look at each word once
+                        depths.put(s,depth + 1); //which is the biggest timesave from not using nodes I've found so far
                     } else if (depth + 1 == depths.get(s)) {
-                        previous.get(s).add(word);
+                        previous.get(s).add(word); //there might be multiple equally short paths to the same word
                     }
                 }
             }
@@ -58,20 +58,23 @@ public class NoNodeShortestPath {
         if (!previous.containsKey(end)) {
             System.out.println("No paths!");
         } else {
-            System.out.println("Paths:\ndigraph something{concentrate=true;");
-            printPaths("",end,first,previous);
-            System.out.print('}');
-
+            System.out.println("digraph something{concentrate=true;");
+            int pathCount = printPaths("",end,first,previous);
+            System.out.println('}');
+            System.out.print("Paths: " + pathCount);
         }
     }
-    public static void printPaths (String currentString, String input, String start, Map<String,Set<String>> previous) {
-        if (input.equals(start)) {
+    public static int printPaths (String currentString, String input, String start, Map<String,Set<String>> previous) {
+        if (input.equals(start)) { //recursively turns the map of previous words into a bunch of paths and gets count
             System.out.println(input + currentString);
+            return 1;
         } else {
+            int pathCount = 0;
             String newCurrent = " -> " + input + currentString;
             for (String s : previous.get(input)) {
-                printPaths(newCurrent,s,start,previous);
+                pathCount += printPaths(newCurrent,s,start,previous);
             }
+            return pathCount;
         }
     }
 }

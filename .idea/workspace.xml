@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6f02f84-6fe2-439e-b1b9-bbb2ea507b8a" name="Changes" comment="currently making depth unneeded, got it working with no nodes and i should have pushed that but i forgot so not working rn">
+    <list default="true" id="d6f02f84-6fe2-439e-b1b9-bbb2ea507b8a" name="Changes" comment="ok its pretty good and quite fast but i want to clean it up more (haven't found a elegant way to remove depth yet but don't know if I need to)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/NoNodeShortestPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/NoNodeShortestPath.java" afterDir="false" />
     </list>
@@ -138,7 +138,14 @@
       <option name="project" value="LOCAL" />
       <updated>1710038613099</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="ok its pretty good and quite fast but i want to clean it up more (haven't found a elegant way to remove depth yet but don't know if I need to)">
+      <created>1710044856465</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1710044856465</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -161,6 +168,7 @@
     <MESSAGE value="fixed error where longer paths already in the queue would still be evaluated after a shortest path was found and cleaned things up" />
     <MESSAGE value="Made it so output format works with cool tree diagram" />
     <MESSAGE value="currently making depth unneeded, got it working with no nodes and i should have pushed that but i forgot so not working rn" />
-    <option name="LAST_COMMIT_MESSAGE" value="currently making depth unneeded, got it working with no nodes and i should have pushed that but i forgot so not working rn" />
+    <MESSAGE value="ok its pretty good and quite fast but i want to clean it up more (haven't found a elegant way to remove depth yet but don't know if I need to)" />
+    <option name="LAST_COMMIT_MESSAGE" value="ok its pretty good and quite fast but i want to clean it up more (haven't found a elegant way to remove depth yet but don't know if I need to)" />
   </component>
 </project>
