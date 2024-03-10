@@ -17,15 +17,15 @@ public class NoNodeShortestPath {
         }
 
         Map<String,Set<String>> previous = new HashMap<>(); //shows what words can lead to this one in a shortest path
-        Map<String,Integer> depths = new TreeMap<>();
         Queue<String> queue = new LinkedList<>();
+        Map<String,Integer> depths = new HashMap<>();
 
         Scanner console = new Scanner(System.in); //gets starting and ending words
         System.out.print("Starting word : ");
         String first = console.next();
         queue.add(first);
-        depths.put(first,0);
         previous.put(first,new HashSet<>());
+        depths.put(first,0);
         System.out.print("Ending word : ");
         String end = console.next();
 
@@ -39,16 +39,17 @@ public class NoNodeShortestPath {
             }
             if (word.equals(end)) { //if this is an end condition we stop adding more guesses
                 finalDepth = depth;
-            } else if (depth < finalDepth){ //otherwise, add all possible/good moves to the queue to be evaluated next
-                Set<String> moves = (Set<String>) moveMap.get(word); //idk why this cast is necessary but otherwise it gets mad
-                moves.removeAll(previous.get(word));
+            } else if (depth < finalDepth) {
+                Set<String> moves = (Set<String>) moveMap.get(word);
                 for (String s : moves) {
-                    queue.add(s); //stores path and depth in the node
-                    depths.put(s,depth + 1);
                     if (!previous.containsKey(s)) {
-                        previous.put(s,new HashSet<>());
+                        previous.put(s, new HashSet<>());
+                        previous.get(s).add(word);
+                        queue.add(s);
+                        depths.put(s,depth + 1);
+                    } else if (depth + 1 == depths.get(s)) {
+                        previous.get(s).add(word);
                     }
-                    previous.get(s).add(word);
                 }
             }
             queue.remove();
@@ -57,9 +58,10 @@ public class NoNodeShortestPath {
         if (!previous.containsKey(end)) {
             System.out.println("No paths!");
         } else {
-            System.out.println("Paths(" + /*paths.size() +*/ "):\ndigraph something{concentrate=true;");
+            System.out.println("Paths:\ndigraph something{concentrate=true;");
             printPaths("",end,first,previous);
             System.out.print('}');
+
         }
     }
     public static void printPaths (String currentString, String input, String start, Map<String,Set<String>> previous) {
