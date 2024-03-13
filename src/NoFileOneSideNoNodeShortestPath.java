@@ -40,7 +40,7 @@ public class NoFileOneSideNoNodeShortestPath {
         while (!queue.isEmpty()) { //evaluation function - goes one guess at a time until we run out of moves/hit depth limit
             String word = queue.element();
             int depth = depths.get(word);
-            System.out.println(depth);
+            //System.out.println(depth);
             if (depth > finalDepth) {
                 break;
             }
