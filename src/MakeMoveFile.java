@@ -43,7 +43,8 @@ public class MakeMoveFile {
     public static boolean isAdjacent (String s1, String s2) { //CAN ONLY CALL ON WORDS SAME SIZE OR 1 SIZE DIFFERENT
         if (s1.length() == s2.length()) {//if the words are same length it's simple, just comapre each and if there's >1 mismatch they don't work
             boolean mismatch = false;
-            for (int i = 0; i < s1.length(); i++) {
+            int l = s1.length();
+            for (int i = 0; i < l; i++) {
                 if (s1.charAt(i) != s2.charAt(i)) {
                     if (mismatch) {
                         return false;
@@ -60,8 +61,10 @@ public class MakeMoveFile {
             }
             int i = 0;
             int j = 0;
-            while (j < s2.length()) { //algorithm increments both words if characters are the same, only longer word if they're different
-                if (i == s1.length()) { //assumes words are only one off and so if longer finishes before smaller there's 2+ mismatches
+            int l1 = s1.length();
+            int l2 = s2.length();
+            while (j < l2) { //algorithm increments both words if characters are the same, only longer word if they're different
+                if (i == l1) { //assumes words are only one off and so if longer finishes before smaller there's 2+ mismatches
                     return false;
                 }
                 if (s1.charAt(i) == s2.charAt(j)) {

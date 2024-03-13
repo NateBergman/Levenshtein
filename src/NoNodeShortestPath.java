@@ -2,7 +2,7 @@ import java.io.*; //Levenshtein by Nate Bergman
 import java.util.*;
 public class NoNodeShortestPath {
     public static void main (String[] args) throws FileNotFoundException {
-        Map moveMap = new TreeMap<String,Set<String>>(); //builds map of valid moves for each word from file
+        Map<String,Set<String>> moveMap = new TreeMap<>(); //builds map of valid moves for each word from file
         Scanner lineScanner = new Scanner(new File("src/Moves"));
         while (lineScanner.hasNext()) { //slowest part by far, should probably clean up
             Scanner wordScanner = new Scanner(lineScanner.nextLine());
@@ -29,18 +29,17 @@ public class NoNodeShortestPath {
         System.out.print("Ending word : ");
         String end = console.next();
 
-        int finalDepth = 20;
+        int finalDepth = 1000;
         while (!queue.isEmpty()) { //evaluation function - goes one guess at a time until we run out of moves/hit depth limit
             String word = queue.element();
             int depth = depths.get(word);
             if (depth > finalDepth) {
-                queue.clear();
                 break;
             }
             if (word.equals(end)) { //if this is an end condition we stop adding more guesses
                 finalDepth = depth;
             } else if (depth < finalDepth) {
-                Set<String> moves = (Set<String>) moveMap.get(word);
+                Set<String> moves = moveMap.get(word);
                 for (String s : moves) {
                     if (!previous.containsKey(s)) { //unexplored words
                         previous.put(s, new HashSet<>());
