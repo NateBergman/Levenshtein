@@ -16,105 +16,128 @@ public class BothSideWithFile {
             moveMap.put(key,adjacents);
         }
 
-        Map<String,Set<String>> previous1 = new HashMap<>(); //shows what words can lead to this one in a shortest path
-        Map<String,Set<String>> previous2 = new HashMap<>();
-        Set<String> explored1 = new HashSet<>();
-        Set<String> explored2 = new HashSet<>();
+        Map<String,Set<String>> previous = new HashMap<>(); //shows what words can lead to this one in a shortest path
+        Map<String,Integer> depths = new HashMap<>(); //positive represents from start, negative from end, 0 is a bridge
         Queue<String> queue1 = new LinkedList<>();
         Queue<String> queue2 = new LinkedList<>();
 
         Scanner console = new Scanner(System.in); //gets starting and ending words
 
-        //signpost of null
-
         System.out.print("Starting word : ");
         String first = console.next();
         queue1.add(first);
-        queue1.add("");
-        previous1.put(first,new HashSet<>());
+        previous.put(first,new HashSet<>());
+        depths.put(first,1);
 
         System.out.print("Ending word : ");
         String end = console.next();
         queue2.add(end);
-        queue2.add("");
-        previous2.put(end,new HashSet<>());
+        previous.put(end,new HashSet<>());
+        depths.put(end,-1);
 
-        while (!queue1.isEmpty() || !queue2.isEmpty()) {
+        int prevDepth1 = 1;
+        int prevDepth2 = -1;
+        while (!queue1.isEmpty() && !queue2.isEmpty()) {
             if (queue1.size() > queue2.size()) { //search from queue2
-                Set<String> frontier = new HashSet<>();
-                while(true) {
+                while (true) {
                     String word = queue2.element();
-                    if (word.equals("")) {
-                        queue2.remove();
-                        queue2.add("");
-                        explored2.addAll(frontier);
+                    int depth = depths.get(word);
+                    if (depth != prevDepth2) { //only goes one line at a time
+                        System.out.println(prevDepth2);
+                        prevDepth2--;
                         break;
                     }
                     Set<String> moves = moveMap.get(word);
                     for (String s : moves) {
-                        if (explored1.contains(s)) {
-                            //we've found a bridge
-                        }
-                        if (!explored2.contains(s)) {
-                            if (!previous2.containsKey(s)) {
-                                previous2.put(s, new HashSet<>());
-                                queue2.add(s);
-                                frontier.add(s);
-                            }
-                            previous2.get(s).add(word);
+                        if (!previous.containsKey(s)) { //unexplored words
+                            previous.put(s, new HashSet<>());
+                            previous.get(s).add(word);
+                            queue2.add(s); //great thing about this method is only need to look at each word once
+                            depths.put(s,depth - 1); //which is the biggest timesave from not using nodes I've found so far
+                        } else if (depth - 1 == depths.get(s)) {
+                            previous.get(s).add(word); //there might be multiple equally short paths to the same word
+                        } else if (depths.get(s) >= 0) {
+                            depths.put(s,0);
+                            previous.get(s).add(word);
+                            queue1.clear();
                         }
                     }
+                    queue2.remove();
                 }
             } else { //search from queue1
-
-            }
-        }
-
-        //int finalDepth = 1000;
-        while (!queue.isEmpty()) { //evaluation function - goes one guess at a time until we run out of moves/hit depth limit
-            String word = queue.element();
-            int depth = depths.get(word);
-            if (depth > finalDepth) {
-                break;
-            }
-            if (word.equals(end)) { //if this is an end condition we stop adding more guesses
-                finalDepth = depth;
-            } else if (depth < finalDepth) {
-                Set<String> moves = moveMap.get(word);
-                for (String s : moves) {
-                    if (!previous.containsKey(s)) { //unexplored words
-                        previous.put(s, new HashSet<>());
-                        previous.get(s).add(word);
-                        queue.add(s); //great thing about this method is only need to look at each word once
-                        depths.put(s,depth + 1); //which is the biggest timesave from not using nodes I've found so far
-                    } else if (depth + 1 == depths.get(s)) {
-                        previous.get(s).add(word); //there might be multiple equally short paths to the same word
+                while (true) {
+                    String word = queue1.element();
+                    int depth = depths.get(word);
+                    if (depth != prevDepth1) { //only goes one line at a time
+                        System.out.println(prevDepth1);
+                        prevDepth1++;
+                        break;
                     }
+                    Set<String> moves = moveMap.get(word);
+                    for (String s : moves) {
+                        if (!previous.containsKey(s)) { //unexplored words
+                            previous.put(s, new HashSet<>());
+                            previous.get(s).add(word);
+                            queue1.add(s); //great thing about this method is only need to look at each word once
+                            depths.put(s,depth + 1); //which is the biggest timesave from not using nodes I've found so far
+                        } else if (depth + 1 == depths.get(s)) {
+                            previous.get(s).add(word); //there might be multiple equally short paths to the same word
+                        } else if (depths.get(s) >= 0) {
+                            depths.put(s,0);
+                            previous.get(s).add(word);
+                            queue2.clear();
+                        }
+                    }
+                    queue1.remove();
                 }
             }
-            queue.remove();
         }
-        System.out.println("Depth: " + finalDepth); //displays results
-        if (!previous.containsKey(end)) {
+        Set<String> bridges = new HashSet<>();
+        for (String s : depths.keySet()) {
+            if (depths.get(s) == 0) {
+                bridges.add(s);
+            }
+        }
+        if (bridges.isEmpty()) {
             System.out.println("No paths!");
         } else {
-            System.out.println("digraph something{concentrate=true;");
-            int pathCount = printPaths("",end,first,previous);
-            System.out.println('}');
-            System.out.print("Paths: " + pathCount);
+            for (String s : bridges) {
+                Set<String> moves = previous.get(s);
+                Set<String> fwd = new HashSet<>();
+                Set<String> bwd = new HashSet<>();
+                for (String m : moves) {
+                    if (depths.get(m) > 0) {
+                        bwd.add(m);
+                    } else {
+                        fwd.add(m);
+                    }
+                }
+                for (String m : fwd) {
+                    printFromEnd(" -> " + s, m, end, previous, bwd, first);
+                }
+            }
         }
     }
-    public static int printPaths (String currentString, String input, String start, Map<String,Set<String>> previous) {
+    public static void printFromStart (String currentString, String input, String start, Map<String,Set<String>> previous) {
         if (input.equals(start)) { //recursively turns the map of previous words into a bunch of paths and gets count
             System.out.println(input + currentString);
-            return 1;
         } else {
-            int pathCount = 0;
             String newCurrent = " -> " + input + currentString;
             for (String s : previous.get(input)) {
-                pathCount += printPaths(newCurrent,s,start,previous);
+                printFromStart(newCurrent,s,start,previous);
             }
-            return pathCount;
+        }
+    }
+    public static void printFromEnd (String currentString, String input, String end, Map<String,Set<String>> previous, Set<String> otherSide, String start) {
+        String newCurrent = currentString + " -> " + input;
+        if (input.equals(end)) {
+            for (String s : otherSide) {
+                printFromStart(newCurrent, s, start, previous);
+            }
+        }else {
+            for (String s : previous.get(input)) {
+                printFromEnd(newCurrent,s,end,previous,otherSide,start);
+            }
         }
     }
 }
