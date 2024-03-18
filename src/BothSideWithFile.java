@@ -49,16 +49,16 @@ public class BothSideWithFile {
                     }
                     Set<String> moves = moveMap.get(word);
                     for (String s : moves) {
-                        if (!previous.containsKey(s)) { //unexplored words
+                        if (!depths.containsKey(s)) { //unexplored words
                             previous.put(s, new HashSet<>());
-                            previous.get(s).add(word);
-                            queue2.add(s); //great thing about this method is only need to look at each word once
-                            depths.put(s,depth - 1); //which is the biggest timesave from not using nodes I've found so far
+                            previous.get(word).add(s);
+                            queue2.add(s);
+                            depths.put(s,depth - 1);
                         } else if (depth - 1 == depths.get(s)) {
-                            previous.get(s).add(word); //there might be multiple equally short paths to the same word
+                            previous.get(word).add(s);
                         } else if (depths.get(s) >= 0) {
                             depths.put(s,0);
-                            previous.get(s).add(word);
+                            previous.get(word).add(s);
                             queue1.clear();
                         }
                     }
@@ -75,14 +75,14 @@ public class BothSideWithFile {
                     }
                     Set<String> moves = moveMap.get(word);
                     for (String s : moves) {
-                        if (!previous.containsKey(s)) { //unexplored words
+                        if (!depths.containsKey(s)) { //unexplored words
                             previous.put(s, new HashSet<>());
                             previous.get(s).add(word);
                             queue1.add(s); //great thing about this method is only need to look at each word once
                             depths.put(s,depth + 1); //which is the biggest timesave from not using nodes I've found so far
                         } else if (depth + 1 == depths.get(s)) {
                             previous.get(s).add(word); //there might be multiple equally short paths to the same word
-                        } else if (depths.get(s) >= 0) {
+                        } else if (depths.get(s) <= 0) {
                             depths.put(s,0);
                             previous.get(s).add(word);
                             queue2.clear();
@@ -92,52 +92,26 @@ public class BothSideWithFile {
                 }
             }
         }
-        Set<String> bridges = new HashSet<>();
-        for (String s : depths.keySet()) {
-            if (depths.get(s) == 0) {
-                bridges.add(s);
-            }
-        }
-        if (bridges.isEmpty()) {
+        if (!previous.containsKey(end)) {
             System.out.println("No paths!");
         } else {
-            for (String s : bridges) {
-                Set<String> moves = previous.get(s);
-                Set<String> fwd = new HashSet<>();
-                Set<String> bwd = new HashSet<>();
-                for (String m : moves) {
-                    if (depths.get(m) > 0) {
-                        bwd.add(m);
-                    } else {
-                        fwd.add(m);
-                    }
-                }
-                for (String m : fwd) {
-                    printFromEnd(" -> " + s, m, end, previous, bwd, first);
-                }
-            }
+            System.out.println("digraph something{concentrate=true;");
+            int pathCount = printPaths("",end,first,previous);
+            System.out.println('}');
+            System.out.print("Paths: " + pathCount);
         }
     }
-    public static void printFromStart (String currentString, String input, String start, Map<String,Set<String>> previous) {
+    public static int printPaths (String currentString, String input, String start, Map<String,Set<String>> previous) {
         if (input.equals(start)) { //recursively turns the map of previous words into a bunch of paths and gets count
             System.out.println(input + currentString);
+            return 1;
         } else {
+            int pathCount = 0;
             String newCurrent = " -> " + input + currentString;
             for (String s : previous.get(input)) {
-                printFromStart(newCurrent,s,start,previous);
+                pathCount += printPaths(newCurrent,s,start,previous);
             }
-        }
-    }
-    public static void printFromEnd (String currentString, String input, String end, Map<String,Set<String>> previous, Set<String> otherSide, String start) {
-        String newCurrent = currentString + " -> " + input;
-        if (input.equals(end)) {
-            for (String s : otherSide) {
-                printFromStart(newCurrent, s, start, previous);
-            }
-        }else {
-            for (String s : previous.get(input)) {
-                printFromEnd(newCurrent,s,end,previous,otherSide,start);
-            }
+            return pathCount;
         }
     }
 }
