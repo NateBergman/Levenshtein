@@ -87,8 +87,8 @@ public class BothSideNoFile {
                         if (!depths.containsKey(s)) { //unexplored words
                             previous.put(s, new HashSet<>());
                             previous.get(s).add(word);
-                            queue1.add(s); //great thing about this method is only need to look at each word once
-                            depths.put(s,depth + 1); //which is the biggest timesave from not using nodes I've found so far
+                            queue1.add(s);
+                            depths.put(s,depth + 1);
                         } else if (depth + 1 == depths.get(s)) {
                             previous.get(s).add(word); //there might be multiple equally short paths to the same word
                         } else if (depths.get(s) <= 0) {
